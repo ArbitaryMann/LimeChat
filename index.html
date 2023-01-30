@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        body{
+            background-color: #000000;
+        }
+        .messagess{
+            color:lime;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .title{
+            position: fixed;
+            top: 2%;
+            left: 2%;
+            color: lime;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+        }
+    </style>
+  <head>
+    <h2 class="title">LimeChat</h2>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script>
+        const username="Ali";
+      const socket = io("http://95.70.214.74:3000");
+
+      socket.on("connect", () => {
+        console.log("Connected to server");
+    
+      });
+
+      socket.on("message", (message) => {
+        const messagesList = document.getElementById("messages");
+        const messageItem = document.createElement("a");
+        messageItem.innerHTML = message;
+        messagesList.appendChild(messageItem);
+        new Audio("msg.wav").play();
+      });
+
+      const form = document.getElementById("form");
+      const input = document.getElementById("input");
+
+   
+      function sendMsg(){
+    
+        const message = document.getElementById("inputs").value;
+        socket.emit("message", "</br ><a style='color:gray;'>12:03 30 Ocak </a> <a style='color:gray;'>"+username+"</a> - "+ message);
+      }
+      document.addEventListener("keypress", function(event) {
+  if (event.keyCode == 13) {
+    sendMsg();
+    document.getElementById("inputs").value=null;
+  }
+});
+    </script>
+  </head>
+
+  <div style="position: fixed; top:96%; left: 0%;">
+    <center><input onkeydown="" style="background-color: black; color:lime; font-family: 'Courier New', Courier, monospace; width: 1000pt;" class="message" value="" id="inputs" type="text">
+    </center>
+  </div>
+
+ 
+    <a class="messagess" id="messages"></a>
+  </body>
+</html>
